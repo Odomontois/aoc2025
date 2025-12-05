@@ -3,7 +3,7 @@ import gleam/io
 import gleam/list
 import gleam/result.{try}
 import gleam/string
-import simplifile.{type FileError}
+import simplifile
 
 pub fn read_lines(num, sort) -> Result(List(String), String) {
   let filename = "./input/day" <> int.to_string(num) <> "." <> sort
@@ -15,7 +15,7 @@ pub fn read_lines(num, sort) -> Result(List(String), String) {
   Ok(string.split(content, "\n"))
 }
 
-fn prefix_run(num, sort, fun) -> Result(a, String) {
+pub fn prefix_run(num, sort, fun) -> Result(a, String) {
   use lines <- try(read_lines(num, sort))
   io.println("===[" <> sort <> "]===\n")
   Ok(fun(lines |> list.take_while(fn(s) { !string.is_empty(s) })))

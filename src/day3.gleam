@@ -2,10 +2,9 @@ import aolist
 import gleam/int
 import gleam/list
 import gleam/order.{Eq, Gt, Lt}
-import gleam/result.{try}
+import gleam/result
 import gleam/string.{to_graphemes}
 import input
-import simplifile.{type FileError}
 
 fn str_max(s1: String, s2: String) {
   case string.compare(s1, s2) {
