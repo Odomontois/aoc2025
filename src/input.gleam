@@ -15,13 +15,24 @@ pub fn read_lines(num, sort) -> Result(List(String), String) {
   Ok(string.split(content, "\n"))
 }
 
+fn remove_last_empty(lines) {
+  case list.reverse(lines) {
+    ["", ..rest] -> list.reverse(rest)
+    _ -> lines
+  }
+}
+
 pub fn prefix_run(num, sort, fun) -> Result(a, String) {
   use lines <- try(read_lines(num, sort))
   io.println("===[" <> sort <> "]===\n")
-  Ok(fun(lines |> list.take_while(fn(s) { !string.is_empty(s) })))
+  Ok(fun(lines |> remove_last_empty))
 }
 
 pub fn inputs(num, fun) -> Result(a, String) {
   use _ <- try(prefix_run(num, "sample", fun))
   prefix_run(num, "full", fun)
+}
+
+pub fn sample_input(num, fun) -> Result(a, String) {
+  prefix_run(num, "sample", fun)
 }
