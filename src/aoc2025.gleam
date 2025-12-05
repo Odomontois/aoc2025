@@ -1,5 +1,9 @@
 import day3
+import gleam/io
 
 pub fn main() {
-  day3.solution()
+  case day3.solution() {
+    Error(s) -> io.println(s)
+    _ -> Nil
+  }
 }
