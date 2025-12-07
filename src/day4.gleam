@@ -1,4 +1,4 @@
-import aolist.{bool_to_int}
+import aoc.{bool_to_int}
 import gleam/dict
 import gleam/io
 import gleam/list

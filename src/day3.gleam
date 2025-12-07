@@ -1,4 +1,4 @@
-import aolist
+import aoc
 import gleam/int
 import gleam/list
 import gleam/order.{Eq, Gt, Lt}
@@ -42,7 +42,7 @@ pub fn sum_best(l, ix) {
   |> list.map(at(_, ix, ""))
   |> list.try_map(int.parse)
   |> result.unwrap([])
-  |> aolist.sum
+  |> aoc.sum
 }
 
 pub fn solution() -> Result(Nil, String) {

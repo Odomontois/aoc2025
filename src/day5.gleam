@@ -15,12 +15,15 @@ type Kind {
   Out
 }
 
-fn compare_kind(k1, k2) {
-  case k1, k2 {
-    In, Out -> order.Lt
-    Out, In -> order.Gt
-    _, _ -> order.Eq
+fn kind_index(k) {
+  case k {
+    In -> 0
+    Out -> 1
   }
+}
+
+fn kind_compare(k1, k2) {
+  int.compare(kind_index(k1), kind_index(k2))
 }
 
 type Event {
@@ -65,7 +68,6 @@ pub fn solution() {
       list.any(rangel, fn(r) { r.from <= x && x <= r.to })
     })
     |> list.length
-  //   echo rangel
   echo res
 
   io.println("<<<part2>>>")
@@ -74,10 +76,9 @@ pub fn solution() {
     |> list.flat_map(fn(r) { [Event(In, r.from), Event(Out, r.to)] })
     |> list.sort(fn(e1, e2) {
       int.compare(e1.at, e2.at)
-      |> order.break_tie(compare_kind(e1.kind, e2.kind))
+      |> order.break_tie(kind_compare(e1.kind, e2.kind))
     })
 
-  1
   let res2 = walk_events(events, 0, 0, 0)
   echo res2
 }
