@@ -1,8 +1,8 @@
-import day6
+import day7
 import gleam/io
 
 pub fn main() {
-  case day6.solution() {
+  case day7.solution() {
     Error(s) -> io.println(s)
     _ -> Nil
   }
