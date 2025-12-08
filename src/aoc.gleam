@@ -16,3 +16,11 @@ pub fn bool_to_int(x) {
 pub fn parse_int(s) {
   int.parse(s) |> result.replace_error("Can't parse " <> s <> " as int")
 }
+
+pub fn on(f, proj) {
+  fn(x, y) { f(proj(x), proj(y)) }
+}
+
+pub const done = Ok(Nil)
+
+pub const skip = Error(Nil)

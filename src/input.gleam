@@ -22,15 +22,36 @@ fn remove_last_empty(lines) {
   }
 }
 
+pub type Sort {
+  Full
+  Sample
+}
+
+fn sort_from_string(s) {
+  case s {
+    "full" -> Full
+    "sample" -> Sample
+    _ -> panic as { "unknown sort " <> s }
+  }
+}
+
 pub fn prefix_run(num, sort, fun) -> Result(a, String) {
   use lines <- try(read_lines(num, sort))
   io.println("===[" <> sort <> "]===\n")
-  Ok(fun(lines |> remove_last_empty))
+  Ok(fun(lines |> remove_last_empty, sort_from_string(sort)))
 }
 
 pub fn inputs(num, fun) -> Result(a, String) {
+  tagged_inputs(num, fn(x, _) { fun(x) })
+}
+
+pub fn tagged_inputs(num, fun) -> Result(a, String) {
   use _ <- try(prefix_run(num, "sample", fun))
   prefix_run(num, "full", fun)
+}
+
+pub fn try_inputs(num, fun) -> Result(a, String) {
+  result.flatten(tagged_inputs(num, fun))
 }
 
 pub fn sample_input(num, fun) -> Result(a, String) {
