@@ -86,6 +86,7 @@ pub fn solution() {
     |> echo
     |> int.product
     |> echo
+
   io.println("[[part2]]")
 
   iter_merge(init, dists, count)
