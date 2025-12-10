@@ -1,5 +1,5 @@
 import aoc.{done, on, skip}
-import gleam/dict.{type Dict}
+import gleam/dict
 import gleam/int
 import gleam/io
 import gleam/list.{try_map}
@@ -69,23 +69,23 @@ pub fn solution() {
   let init = uf.of_size(count)
 
   io.println("[[part1]]")
-  let part1 =
-    dists
-    |> list.take(size(sort))
-    |> list.fold(init, merge_dist)
-    |> dict.values
-    |> list.filter_map(fn(x) {
-      case x {
-        Root(i) if i > 1 -> Ok(i)
-        _ -> skip
-      }
-    })
-    |> list.sort(int.compare)
-    |> list.reverse
-    |> list.take(3)
-    |> echo
-    |> int.product
-    |> echo
+
+  dists
+  |> list.take(size(sort))
+  |> list.fold(init, merge_dist)
+  |> dict.values
+  |> list.filter_map(fn(x) {
+    case x {
+      Root(i) if i > 1 -> Ok(i)
+      _ -> skip
+    }
+  })
+  |> list.sort(int.compare)
+  |> list.reverse
+  |> list.take(3)
+  |> echo
+  |> int.product
+  |> echo
 
   io.println("[[part2]]")
 

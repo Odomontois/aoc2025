@@ -1,8 +1,6 @@
 import aoc
-import gleam/bool
 import gleam/int.{max, min}
 import gleam/list
-import gleam/order.{Eq, Gt, Lt}
 import gleam/result.{try}
 import gleam/string
 import input
@@ -39,10 +37,6 @@ fn line(pp) {
 
 fn between(x, l, u) {
   l < x && x < u
-}
-
-fn squished(r: Rectangle) {
-  r.left == r.right || r.bottom == r.top
 }
 
 // fn inside(r: Rectangle, p) {
@@ -89,14 +83,13 @@ fn intersects(l1, l2) {
 }
 
 fn good_rect(r: Rectangle, ls: List(Line)) {
-  !squished(r)
-  && !{
+  !{
     use l <- list.any(ls)
     use s <- list.any(sides(r))
     intersects(l, s)
   }
   && {
-    let #(cx, cy) as c = center(r)
+    let #(cx, cy) = center(r)
     let beam = Horizontal(cy, cx, 10_000_000)
     let inside =
       list.fold(ls, 0, fn(x, l) { x + aoc.bool_to_int(intersects(beam, l)) })
@@ -128,16 +121,14 @@ pub fn solution() {
   use rest_lines <- try(points |> list.window_by_2 |> list.try_map(line))
   let lines = [ends, ..rest_lines] |> echo
 
-  let res1 =
-    rects
-    |> largest_area
-    |> echo
+  rects
+  |> largest_area
+  |> echo
 
-  let res2 =
-    rects
-    |> list.filter(good_rect(_, lines))
-    |> largest_area
-    |> echo
+  rects
+  |> list.filter(good_rect(_, lines))
+  |> largest_area
+  |> echo
 
   aoc.done
 }

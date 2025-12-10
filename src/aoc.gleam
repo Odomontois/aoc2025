@@ -1,6 +1,7 @@
 import gleam/int
 import gleam/list
 import gleam/result
+import gleam/string
 
 pub fn sum(xs) {
   list.fold(xs, 0, fn(a, b) { a + b })
@@ -19,6 +20,10 @@ pub fn parse_int(s) {
 
 pub fn on(f, proj) {
   fn(x, y) { f(proj(x), proj(y)) }
+}
+
+pub fn err_string(res) {
+  res |> result.map_error(string.inspect)
 }
 
 pub const done = Ok(Nil)
