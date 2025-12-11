@@ -53,13 +53,27 @@ fn walk(cache, g: Graph, start, end) {
   }
 }
 
+fn paths(g: Graph, start, end) {
+  let #(res, _) = walk(dict.new(), g, start, end)
+  res
+}
+
 pub fn solution() {
   use ls, _ <- input.lines(11)
   use inps <- try(ls |> list.try_map(parse_line))
   let g = graph(inps)
   //   echo g
-  let #(res, _) = walk(dict.new(), g, "you", "out")
-  echo res
+  paths(g, "you", "out") |> echo
+
+  let res2 =
+    paths(g, "svr", "fft")
+    * paths(g, "fft", "dac")
+    * paths(g, "dac", "out")
+    + paths(g, "svr", "dac")
+    * paths(g, "dac", "fft")
+    * paths(g, "fft", "out")
+
+  echo res2
 
   aoc.done
 }
