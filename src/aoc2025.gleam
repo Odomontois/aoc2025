@@ -1,3 +1,7 @@
+import argv
+import clip.{type Command}
+import clip/arg
+import clip/opt.{type Opt}
 import day1
 import day10
 import day11
@@ -12,8 +16,8 @@ import day9
 import gleam/int
 import gleam/io
 import gleam/list
-import gleam/result
-import input
+import gleam/result.{try}
+import input.{type Sort}
 
 const solutions = [
   day1.solution,
@@ -38,17 +42,47 @@ fn dummy_solution(day) {
   }
 }
 
+fn day_opt() -> Opt(Int) {
+  opt.new("day") |> opt.int |> opt.help("The AOC day") |> opt.default(today)
+}
+
+fn sort_arg() -> arg.Arg(Sort) {
+  arg.new("sort")
+  |> arg.try_map(input.sort_parse)
+  |> arg.help("The input sort")
+}
+
+fn command() -> Command(#(Int, List(Sort))) {
+  clip.command({
+    use day <- clip.parameter
+    use sorts <- clip.parameter
+    #(day, sorts)
+  })
+  |> clip.opt(day_opt())
+  |> clip.arg_many(sort_arg())
+}
+
+const today = 11
+
 pub fn main() {
-  let day = 11
-  let sorts = [input.Full, input.Sample]
+  let parsed_command = command() |> clip.run(argv.load().arguments)
 
-  let solution =
-    solutions
-    |> list.drop(day - 1)
-    |> list.first
-    |> result.unwrap(dummy_solution(day))
+  let run_result = {
+    use #(day, sorts) <- try(parsed_command)
+    let ss = case sorts {
+      [] -> [input.Sample, input.Full]
+      _ -> sorts
+    }
 
-  case solution()(sorts) {
+    let solution =
+      solutions
+      |> list.drop(day - 1)
+      |> list.first
+      |> result.unwrap(dummy_solution(day))
+
+    solution()(ss)
+  }
+  case run_result {
     Error(s) -> io.println(s)
     _ -> Nil
   }

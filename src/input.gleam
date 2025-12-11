@@ -34,6 +34,14 @@ fn sort_to_string(s) {
   }
 }
 
+pub fn sort_parse(s) {
+  case s {
+    "full" -> Ok(Full)
+    "sample" -> Ok(Sample)
+    _ -> Error("bad sort" <> s)
+  }
+}
+
 pub fn prefix_run(num, sort, fun) -> Result(a, String) {
   let sort_s = sort_to_string(sort)
   use lines <- try(read_lines(num, sort_s))
