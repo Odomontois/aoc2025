@@ -1,7 +1,8 @@
+import aoc
 import gleam/int
 import gleam/order
 import gleam/string
-import simplifile.{read}
+import input
 
 fn zero_count(ls: List(String), cur: Int, zs: Int, rzs: Int) -> #(Int, Int) {
   case ls {
@@ -38,9 +39,8 @@ fn zero_count(ls: List(String), cur: Int, zs: Int, rzs: Int) -> #(Int, Int) {
 }
 
 pub fn solution() {
-  let filepath = "./input/day1.full"
-  let assert Ok(input) = read(from: filepath)
-  let lines = string.split(input, on: "\n")
-  echo zero_count(lines, 50, 0, 0)
-  //   echo lines
+  use ls, _ <- input.lines(1)
+
+  echo zero_count(ls, 50, 0, 0)
+  aoc.done
 }

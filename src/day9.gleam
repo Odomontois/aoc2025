@@ -98,7 +98,7 @@ fn good_rect(r: Rectangle, ls: List(Line)) {
 }
 
 pub fn solution() {
-  use ls, _ <- input.try_inputs(9)
+  use ls, _ <- input.lines(9)
   use points <- try(
     list.try_map(ls, fn(s) {
       use is <- try(string.split(s, ",") |> list.try_map(aoc.parse_int))

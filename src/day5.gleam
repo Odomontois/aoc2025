@@ -1,3 +1,4 @@
+import aoc
 import gleam/int
 import gleam/io
 import gleam/list
@@ -47,7 +48,7 @@ fn walk_events(events: List(Event), start: Int, stack: Int, acc: Int) -> Int {
 }
 
 pub fn solution() {
-  use ls <- input.inputs(5)
+  use ls, _ <- input.lines(5)
   let assert #(ranges, [_, ..nums]) =
     list.split_while(ls, fn(s) { !string.is_empty(s) })
   let rangel =
@@ -81,4 +82,5 @@ pub fn solution() {
 
   let res2 = walk_events(events, 0, 0, 0)
   echo res2
+  aoc.done
 }

@@ -1,8 +1,9 @@
+import aoc
 import gleam/int
 import gleam/list
 import gleam/result
-import gleam/string.{replace, split}
-import simplifile
+import gleam/string.{split}
+import input
 
 type Range {
   Range(from: Int, to: Int)
@@ -50,10 +51,9 @@ fn times(count: Int) -> fn(Int) -> Int {
 }
 
 pub fn solution() {
-  let assert Ok(input) = simplifile.read("input/day2.full")
+  use ls, _ <- input.lines(2)
   let ranges =
-    input
-    |> replace("\n", "")
+    string.join(ls, "")
     |> split(",")
     |> list.map(fn(s) {
       case split(s, "-") |> list.try_map(int.parse) {
@@ -81,4 +81,5 @@ pub fn solution() {
   echo res
   echo res |> list.first |> result.unwrap(0)
   echo res |> list.fold(0, fn(x, y) { x + y })
+  aoc.done
 }

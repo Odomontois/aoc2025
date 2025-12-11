@@ -67,7 +67,7 @@ fn reduce_ops(xs, op, cur, sum) {
 }
 
 pub fn solution() {
-  use ls <- input.inputs(6)
+  use ls, _ <- input.lines(6)
   io.println("part1")
   let assert [ops, ..nums] = list.reverse(ls |> map(parse_line))
   let opl = ops |> list.try_map(op_from_string) |> result.unwrap([])
@@ -87,5 +87,5 @@ pub fn solution() {
   let res = reduce_ops(parts, Add, 0, 0)
 
   echo res
-  Nil
+  aoc.done
 }

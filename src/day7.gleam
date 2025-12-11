@@ -53,6 +53,7 @@ fn splitters(ls) {
 }
 
 pub fn solution() {
-  use ls <- input.inputs(7)
+  use ls, _ <- input.lines(7)
   splitters(ls) |> echo |> fn(x) { x.line } |> int.sum |> echo
+  aoc.done
 }

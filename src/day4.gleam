@@ -48,7 +48,7 @@ fn access_iter(d, q, acc) {
 }
 
 pub fn solution() {
-  use ls <- input.inputs(4)
+  use ls, _ <- input.lines(4)
   //   use ls <- input.prefix_run(4, "sample")
   let ds =
     ls
@@ -89,4 +89,5 @@ pub fn solution() {
   let res2 = access_iter(d1, q, 0)
 
   echo res2
+  aoc.done
 }

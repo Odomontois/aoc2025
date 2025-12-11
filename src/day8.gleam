@@ -54,7 +54,7 @@ fn iter_merge(uf, dists, size) {
 }
 
 pub fn solution() {
-  use ls, sort <- input.try_inputs(8)
+  use ls, sort <- input.lines(8)
   use ps <- try(try_map(ls, parse))
   let indexed = ps |> list.index_map(pair.new)
   let dists =

@@ -45,11 +45,11 @@ pub fn sum_best(l, ix) {
   |> aoc.sum
 }
 
-pub fn solution() -> Result(Nil, String) {
-  use in <- input.inputs(3)
+pub fn solution() {
+  use in, _ <- input.lines(3)
   let xs = in |> list.map(max_joltage)
   echo xs |> sum_best(1)
   echo xs |> sum_best(11)
   //   echo aolist.sum(xs)
-  Nil
+  aoc.done
 }

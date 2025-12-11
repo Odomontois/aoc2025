@@ -107,7 +107,7 @@ fn search_combinations(xs, cur, count) {
 
 pub fn solution() {
   let parse = parser()
-  use ls, _ <- input.try_inputs(10)
+  use ls, _ <- input.lines(10)
   use entries <- try(ls |> list.try_map(parse))
 
   entries

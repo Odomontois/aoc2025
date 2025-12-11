@@ -27,33 +27,24 @@ pub type Sort {
   Sample
 }
 
-fn sort_from_string(s) {
+fn sort_to_string(s) {
   case s {
-    "full" -> Full
-    "sample" -> Sample
-    _ -> panic as { "unknown sort " <> s }
+    Full -> "full"
+    Sample -> "sample"
   }
 }
 
 pub fn prefix_run(num, sort, fun) -> Result(a, String) {
-  use lines <- try(read_lines(num, sort))
-  io.println("===[" <> sort <> "]===\n")
-  Ok(fun(lines |> remove_last_empty, sort_from_string(sort)))
+  let sort_s = sort_to_string(sort)
+  use lines <- try(read_lines(num, sort_s))
+  io.println("===[" <> sort_s <> "]===\n")
+  fun(lines |> remove_last_empty, sort)
 }
 
-pub fn inputs(num, fun) -> Result(a, String) {
-  tagged_inputs(num, fn(x, _) { fun(x) })
+pub fn tagged_inputs(num, fun, sorts) -> Result(List(a), String) {
+  sorts |> list.try_map(prefix_run(num, _, fun))
 }
 
-pub fn tagged_inputs(num, fun) -> Result(a, String) {
-  use _ <- try(prefix_run(num, "sample", fun))
-  prefix_run(num, "full", fun)
-}
-
-pub fn try_inputs(num, fun) -> Result(a, String) {
-  result.flatten(tagged_inputs(num, fun))
-}
-
-pub fn sample_input(num, fun) -> Result(a, String) {
-  prefix_run(num, "sample", fun)
+pub fn lines(num, fun) -> fn(List(Sort)) -> Result(List(a), String) {
+  tagged_inputs(num, fun, _)
 }
